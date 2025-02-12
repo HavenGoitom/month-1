@@ -1,5 +1,6 @@
-def greeting(name):
+def greeting():
+    name = input("Enter your name: ")
     print(f"Hey {name} how are you doing today?")
 
-name = input("Enter your name: ")
-greeting(name)
+
+greeting()
