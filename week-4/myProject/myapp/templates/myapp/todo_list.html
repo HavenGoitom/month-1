@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 600px;
+      background-color: #fff;
+      padding: 20px;
+      margin-top: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    /* Search Form Styles */
+    .search-form input[type="text"] {
+      width: 80%;
+      padding: 10px;
+      margin-right: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 18px;
+    }
+
+    .search-form button {
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .search-form button:hover {
+      background-color: #218838;
+    }
+
+    /* Add Task Form Styles */
+    .add-form input[type="text"] {
+      width: 80%;
+      padding: 10px;
+      margin-right: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    .add-form button {
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .add-form button:hover {
+      background-color: #0056b3;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      background-color: #f9f9f9;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    li span {
+      flex-grow: 1;
+    }
+
+    .completed {
+      text-decoration: line-through;
+      color: #aaa;
+    }
+
+    .task-actions a {
+      color: #007BFF;
+      text-decoration: none;
+      margin-left: 10px;
+    }
+
+    .task-actions a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>To-Do List</h1>
+
+    <!-- Search Form -->
+    <form class="search-form" method="get" action="{% url 'todo_list' %}">
+      {{ search_form.query }}
+      <button type="submit">Search</button>
+    </form>
+
+    <!-- Add New Task Form -->
+    <h2>Add New Task</h2>
+    <form class="add-form" method="POST" action="{% url 'todo_list' %}">
+      {% csrf_token %}
+      {{ add_form.title }}
+      <button type="submit">Add Task</button>
+    </form>
+
+    <!-- Task List -->
+    {% if todos %}
+      <ul>
+        {% for todo in todos %}
+          <li>
+            <span class="{% if todo.completed %}completed{% endif %}">
+              {{ todo.title }}
+            </span>
+            <div class="task-actions">
+              <a href="{% url 'toggle_complete' todo.id %}">Toggle Complete</a> |
+              <a href="{% url 'delete_task' todo.id %}">Delete</a>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No tasks found.</p>
+    {% endif %}
+  </div>
+</body>
+</html>
