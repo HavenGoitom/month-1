@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  /* You can move this CSS into a separate file if preferred */
+  .form-container {
+    max-width: 600px;
+    margin: 50px auto; /* Centers the container */
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    font-family: Arial, sans-serif;
+  }
+
+  .form-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .form-container hr {
+    margin: 20px 0;
+  }
+
+  /* Style the default Django form fields */
+  .form-container p {
+    margin-bottom: 15px;
+  }
+
+  .form-container label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .form-container input[type="text"],
+  .form-container input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .form-container input[type="checkbox"] {
+    margin-right: 5px;
+    transform: scale(1.2); /* Make checkbox a bit bigger */
+  }
+
+  /* Submit Button */
+  .form-container button[type="submit"] {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .form-container button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+
+  /* "Back to Home" link styled like a button (optional) */
+  .back-link {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+  }
+  .back-link:hover {
+    color: #0056b3;
+  }
+</style>
+
+<div class="form-container">
+  <h1>Loans</h1>
+  <hr>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
+
+  <a href="{% url 'home' %}" class="back-link">Back to Home</a>
+</div>
+{% endblock %}
